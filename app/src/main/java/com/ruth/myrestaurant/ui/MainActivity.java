@@ -1,4 +1,4 @@
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ruth.myrestaurant.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

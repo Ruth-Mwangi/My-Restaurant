@@ -1,4 +1,4 @@
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.adapters;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

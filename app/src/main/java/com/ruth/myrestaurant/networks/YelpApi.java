@@ -1,4 +1,4 @@
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.networks;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

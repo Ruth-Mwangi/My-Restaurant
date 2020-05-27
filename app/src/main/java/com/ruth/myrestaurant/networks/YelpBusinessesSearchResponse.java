@@ -1,8 +1,10 @@
 
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.networks;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ruth.myrestaurant.models.Business;
+import com.ruth.myrestaurant.models.Region;
 
 import java.util.List;
 

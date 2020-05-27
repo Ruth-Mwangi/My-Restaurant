@@ -1,5 +1,8 @@
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.networks;
 
+
+import com.ruth.myrestaurant.Constants;
+import com.ruth.myrestaurant.models.Restaurant;
 
 import org.json.JSONArray;
 import org.json.JSONException;

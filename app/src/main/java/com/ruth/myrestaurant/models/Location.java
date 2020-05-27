@@ -1,5 +1,5 @@
 
-package com.ruth.myrestaurant;
+package com.ruth.myrestaurant.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
