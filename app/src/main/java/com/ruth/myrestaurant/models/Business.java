@@ -4,13 +4,15 @@ package com.ruth.myrestaurant.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import org.parceler.Parcel;
 
+import java.util.List;
+@Parcel
 public class Business {
 
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private Double rating;
     @SerializedName("price")
     @Expose
     private String price;
@@ -56,30 +58,30 @@ public class Business {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Business() {
     }
 
     /**
-     * 
-     * @param distance
-     * @param rating
-     * @param coordinates
+     *
      * @param transactions
-     * @param url
-     * @param isClosed
      * @param phone
-     * @param reviewCount
-     * @param price
-     * @param imageUrl
-     * @param name
-     * @param alias
      * @param location
+     * @param alias
+     * @param imageUrl
+     * @param url
      * @param id
+     * @param distance
+     * @param price
+     * @param reviewCount
+     * @param name
      * @param categories
+     * @param rating
+     * @param isClosed
+     * @param coordinates
      */
-    public Business(Integer rating, String price, String phone, String id, String alias, Boolean isClosed, List<Category> categories, Integer reviewCount, String name, String url, Coordinates coordinates, String imageUrl, Location location, Double distance, List<String> transactions) {
+    public Business(Double rating, String price, String phone, String id, String alias, Boolean isClosed, List<Category> categories, Integer reviewCount, String name, String url, Coordinates coordinates, String imageUrl, Location location, Double distance, List<String> transactions) {
         super();
         this.rating = rating;
         this.price = price;
@@ -98,11 +100,11 @@ public class Business {
         this.transactions = transactions;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

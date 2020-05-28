@@ -27,9 +27,9 @@ import retrofit2.Callback;
 //import okhttp3.Callback;
 
 
-public class RestaurantsActivity extends AppCompatActivity {
+public class RestaurantListActivity extends AppCompatActivity {
 
-    private static final String TAG = RestaurantsActivity.class.getSimpleName();
+    private static final String TAG = RestaurantListActivity.class.getSimpleName();
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -56,25 +56,7 @@ public class RestaurantsActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<YelpBusinessesSearchResponse>() {
 
-//
-//            @Override
-//            public void onResponse(Call<YelpBusinessesSearchResponse> call, Response<YelpBusinessesSearchResponse> response) {
-//                hideProgressBar();
-//
-//                if (response.isSuccessful()) {
-//                    restaurants = response.body().getBusinesses();
-//                    mAdapter = new RestaurantListAdapter(RestaurantsActivity.this, restaurants);
-//                    mRecyclerView.setAdapter(mAdapter);
-//                    RecyclerView.LayoutManager layoutManager =
-//                            new LinearLayoutManager(RestaurantsActivity.this);
-//                    mRecyclerView.setLayoutManager(layoutManager);
-//                    mRecyclerView.setHasFixedSize(true);
-//
-//                    showRestaurants();
-//                } else {
-//                    showUnsuccessfulMessage();
-//                }
-//            }
+
 
             @Override
             public void onResponse(Call<YelpBusinessesSearchResponse> call, retrofit2.Response<YelpBusinessesSearchResponse> response) {
@@ -82,10 +64,10 @@ public class RestaurantsActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     restaurants = response.body().getBusinesses();
-                    mAdapter = new RestaurantListAdapter(RestaurantsActivity.this, restaurants);
+                    mAdapter = new RestaurantListAdapter(RestaurantListActivity.this, restaurants);
                     mRecyclerView.setAdapter(mAdapter);
                     RecyclerView.LayoutManager layoutManager =
-                            new LinearLayoutManager(RestaurantsActivity.this);
+                            new LinearLayoutManager(RestaurantListActivity.this);
                     mRecyclerView.setLayoutManager(layoutManager);
                     mRecyclerView.setHasFixedSize(true);
 

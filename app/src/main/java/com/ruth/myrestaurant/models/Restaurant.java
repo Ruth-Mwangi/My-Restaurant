@@ -2,6 +2,7 @@ package com.ruth.myrestaurant.models;
 
 import java.util.ArrayList;
 
+
 public class Restaurant {
     private String mName;
     private String mPhone;
