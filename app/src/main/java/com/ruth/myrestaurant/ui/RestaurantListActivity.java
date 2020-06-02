@@ -1,7 +1,9 @@
 package com.ruth.myrestaurant.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ruth.myrestaurant.Constants;
 import com.ruth.myrestaurant.R;
 import com.ruth.myrestaurant.adapters.RestaurantListAdapter;
 import com.ruth.myrestaurant.models.Business;
@@ -23,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 //import okhttp3.Callback;
 
@@ -35,6 +39,8 @@ public class RestaurantListActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.errorTextView) TextView mErrorTextView;
     @BindView(R.id.progressBar) ProgressBar mProgressBar;
+    private SharedPreferences mSharedPreferences;
+    private String mRecentAddress;
 
     private RestaurantListAdapter mAdapter;
 
@@ -48,9 +54,18 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+//        Log.d("Shared Pref Location", mRecentAddress);
 
         YelpApi client = YelpClient.getClient();
         //YelpService client = new YelpService();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+        if (mRecentAddress != null) {
+            //getRestaurants(mRecentAddress);
+
+        }
 
         Call<YelpBusinessesSearchResponse> call = client.getRestaurants(location, "restaurants");
 
@@ -59,7 +74,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
 
             @Override
-            public void onResponse(Call<YelpBusinessesSearchResponse> call, retrofit2.Response<YelpBusinessesSearchResponse> response) {
+            public void onResponse(Call<YelpBusinessesSearchResponse> call, Response<YelpBusinessesSearchResponse> response) {
                 hideProgressBar();
 
                 if (response.isSuccessful()) {
@@ -85,6 +100,8 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
 
         });
+
+
     }
 
     private void showFailureMessage() {
