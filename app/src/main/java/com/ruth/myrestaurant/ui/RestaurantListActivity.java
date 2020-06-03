@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +46,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     @BindView(R.id.progressBar) ProgressBar mProgressBar;
     private SharedPreferences mSharedPreferences;
     private String mRecentAddress;
+    private SharedPreferences.Editor mEditor;
 
     private RestaurantListAdapter mAdapter;
 
@@ -54,8 +60,8 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
 //        Log.d("Shared Pref Location", mRecentAddress);
 
         YelpApi client = YelpClient.getClient();
@@ -102,6 +108,77 @@ public class RestaurantListActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                addToSharedPreferences(query);
+                YelpApi client = YelpClient.getClient();
+                Call<YelpBusinessesSearchResponse> call = client.getRestaurants(query, "restaurants");
+
+                call.enqueue(new Callback<YelpBusinessesSearchResponse>() {
+
+
+
+                    @Override
+                    public void onResponse(Call<YelpBusinessesSearchResponse> call, Response<YelpBusinessesSearchResponse> response) {
+                        hideProgressBar();
+
+                        if (response.isSuccessful()) {
+                            restaurants = response.body().getBusinesses();
+                            mAdapter = new RestaurantListAdapter(RestaurantListActivity.this, restaurants);
+                            mRecyclerView.setAdapter(mAdapter);
+                            RecyclerView.LayoutManager layoutManager =
+                                    new LinearLayoutManager(RestaurantListActivity.this);
+                            mRecyclerView.setLayoutManager(layoutManager);
+                            mRecyclerView.setHasFixedSize(true);
+
+                            showRestaurants();
+                        } else {
+                            showUnsuccessfulMessage();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<YelpBusinessesSearchResponse> call, Throwable t) {
+                        hideProgressBar();
+                        showFailureMessage();
+                    }
+
+                });
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+    private void addToSharedPreferences(String location) {
+        mEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
     }
 
     private void showFailureMessage() {
