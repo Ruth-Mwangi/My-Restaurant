@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -36,7 +37,7 @@ public class MainActivityInstrumentationTest {
     @Test
     public void locationIsSentToRestaurantsActivity(){
         String location = "Portland";
-        onView(withId(R.id.locationEditText)).perform(typeText(location)).perform(closeSoftKeyboard());
+        onView(withId(R.id.locationEditText)).perform(replaceText(location)).perform(closeSoftKeyboard());
         try {                             // the sleep method requires to be checked and handled so we use try block
             Thread.sleep(250);
         } catch (InterruptedException e){
