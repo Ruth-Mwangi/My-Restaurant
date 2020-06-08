@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ruth.myrestaurant.R;
 import com.ruth.myrestaurant.models.Business;
 import com.ruth.myrestaurant.ui.RestaurantDetailActivity;
+import com.ruth.myrestaurant.util.OnStartDragListener;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -26,6 +27,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private List<Business> mRestaurants;
     private Context mContext;
 
+
     public RestaurantListAdapter(Context context, List<Business> restaurants) {
         mContext = context;
         mRestaurants = restaurants;
@@ -33,7 +35,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public RestaurantListAdapter.RestaurantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_list_item_drag, parent, false);
         RestaurantViewHolder viewHolder = new RestaurantViewHolder(view);
         return viewHolder;
     }
