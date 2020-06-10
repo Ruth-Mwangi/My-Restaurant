@@ -55,8 +55,12 @@ public class Business {
     @SerializedName("transactions")
     @Expose
     private List<String> transactions = null;
+    @SerializedName("pushid")
+    @Expose
     private String pushId;
-
+    @SerializedName("index")
+    @Expose
+    private String index;
     /**
      * No args constructor for use in serialization
      *
@@ -99,6 +103,7 @@ public class Business {
         this.location = location;
         this.distance = distance;
         this.transactions = transactions;
+        this.index = "not_specified";
     }
 
     public Double getRating() {
@@ -226,6 +231,13 @@ public class Business {
 
     public void setPushId(String pushId) {
         this.pushId = pushId;
+    }
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
 }
